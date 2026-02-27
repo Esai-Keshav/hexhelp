@@ -1,2 +1,5 @@
 chainlit
 langchain
+faiss-cpu
+model2vec
+python-dotenv

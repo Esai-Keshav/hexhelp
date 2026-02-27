@@ -76,9 +76,7 @@ docs/_build/
 target/
 
 test.ipynb
-.chainlit/
-.files/
-chainlit.md
+
 # Jupyter Notebook
 .ipynb_checkpoints
 

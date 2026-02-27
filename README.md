@@ -1,1 +1,3 @@
-# hexhelp
+# Hexhelp
+
+chainlit run ui.py

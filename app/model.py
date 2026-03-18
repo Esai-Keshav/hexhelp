@@ -1,23 +1,40 @@
 from vector import search
 from langchain_core.prompts import ChatPromptTemplate
 from config import model
+from system_prompt import prompt as ai_prompt
+from cachetools import TTLCache
+from rich import print
+
+chat_memory = TTLCache(maxsize=7, ttl=300)
 
 
-def geneate_response(query):
+def add_history(chat):
+    chat_memory[chat_memory.currsize + 1] = chat
+
+
+async def geneate_response(query):
     docs = search(query=query)
+    print(docs)
+    add_history(query)
+    # print(chat_memory)
+
     prompt = ChatPromptTemplate.from_messages(
         [
             (
                 "system",
-                "You are a helpful assistant that helps answer questions based on the following context: {context}",
+                ai_prompt,
             ),
             ("human", "{question}"),
         ]
     )
 
     rag = prompt | model
-    res = rag.invoke({"context": docs, "question": query})
-    print(res.content)
+    async for chunk in rag.astream(
+        {"context": docs, "history": chat_memory, "question": query}
+    ):
+        # print(res.content)
+        if chunk:
+            yield chunk.content
 
 
 if __name__ == "__main__":

@@ -1,11 +1,19 @@
 import chainlit as cl
+from model import geneate_response
 
 
 @cl.on_message
 async def main(message: cl.Message):
-    # Your custom logic goes here...
+    # ai = geneate_response(message.content)
+    # await cl.Message(
+    #     content=ai,
+    # ).send()
 
-    # Send a response back to the user
-    await cl.Message(
-        content=f"Received: {message.content}",
-    ).send()
+    msg = cl.Message(content="")
+
+    await msg.send()
+
+    async for chunk in geneate_response(message.content):
+        await msg.stream_token(chunk)
+
+    await msg.update()

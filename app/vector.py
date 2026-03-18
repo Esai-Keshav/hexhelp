@@ -1,27 +1,26 @@
-from config import vector_store, embeddings, vector_db
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.document_loaders import PyPDFLoader
+from config import vector_db
 
 
-def to_db():
-    file_path = "./docs/FIRST GRADUATE SCHOLARSHIP INFORMATION.pdf"
-    print(file_path)
-    loader = PyPDFLoader(file_path)
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=800,
-        chunk_overlap=120,
-    )
+# def to_db():
+#     file_path = "./docs/scholarship.pdf"
+#     # file_path = "./docs/FIRST GRADUATE SCHOLARSHIP INFORMATION.pdf"
+#     # print(file_path)
+#     loader = PyPDFLoader(file_path)
+#     text_splitter = RecursiveCharacterTextSplitter(
+#         chunk_size=800,
+#         chunk_overlap=100,
+#     )
 
-    # print(len(loader.load_and_split()))
-    chunks = loader.load_and_split(text_splitter=text_splitter)
-    vector_store.add_documents(chunks)
-    vector_store.save_local("./vector_db/")
+#     # print(len(loader.load_and_split()))
+#     chunks = loader.load_and_split(text_splitter=text_splitter)
+#     vector_store.add_documents(chunks)
+#     vector_store.save_local("./vector_db/")
 
 
 def search(query="FIRST GRADUATE SCHOLARSHIP INFORMATION ?"):
-    docs = vector_db.similarity_search(query=query, k=3)
+    docs = vector_db.similarity_search(query=query, k=10)
 
-    print([doc.page_content for doc in docs])
+    # print([doc.page_content for doc in docs])
     return [doc.page_content for doc in docs]
 
 

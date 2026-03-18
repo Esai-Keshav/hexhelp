@@ -8,6 +8,7 @@ from langchain.chat_models import init_chat_model
 
 load_dotenv()
 
+
 embeddings = Model2vecEmbeddings("minishlab/potion-base-8M")
 
 embedding_dim = len(embeddings.embed_query("hello world"))
@@ -20,6 +21,8 @@ vector_store = FAISS(
     index_to_docstore_id={},
 )
 
+# vector_store.save_local("./vector_db/")
+
 
 vector_db = FAISS.load_local(
     "./vector_db/",
@@ -30,6 +33,6 @@ vector_db = FAISS.load_local(
 model = init_chat_model(
     model="llama-3.1-8b-instant",
     model_provider="groq",
-    temperature=0.3,
-    max_tokens=250,
+    temperature=0.1,
+    max_tokens=300,
 )

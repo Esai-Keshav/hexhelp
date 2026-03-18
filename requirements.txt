@@ -3,3 +3,6 @@ langchain
 faiss-cpu
 model2vec
 python-dotenv
+langchain-community
+langchain-groq
+cachetools

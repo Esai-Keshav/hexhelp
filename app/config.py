@@ -33,6 +33,6 @@ vector_db = FAISS.load_local(
 model = init_chat_model(
     model="llama-3.1-8b-instant",
     model_provider="groq",
-    temperature=0.1,
-    max_tokens=300,
+    temperature=0.2,
+    max_tokens=500,
 )

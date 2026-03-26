@@ -1,5 +1,5 @@
 import chainlit as cl
-from model import geneate_response
+from model import add_history, geneate_response
 
 
 @cl.on_message
@@ -17,3 +17,5 @@ async def main(message: cl.Message):
         await msg.stream_token(chunk)
 
     await msg.update()
+
+    add_history({"user_message": message.content, "ai_response": msg.content})

@@ -1,11 +1,12 @@
-from vector import search
-from langchain_core.prompts import ChatPromptTemplate
-from config import model
-from system_prompt import prompt as ai_prompt
 from cachetools import TTLCache
+from config import model
+from langchain_core.prompts import ChatPromptTemplate
 from rich import print
+from system_prompt import prompt as ai_prompt
+from vector import search
 
 chat_memory = TTLCache(maxsize=7, ttl=300)
+# chat_memory = []
 
 
 def add_history(chat):
@@ -15,8 +16,8 @@ def add_history(chat):
 async def geneate_response(query):
     docs = search(query=query)
     print(docs)
-    add_history(query)
-    # print(chat_memory)
+    # add_history(query)
+    print(chat_memory)
 
     prompt = ChatPromptTemplate.from_messages(
         [

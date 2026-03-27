@@ -1,6 +1,5 @@
 from config import vector_db
 
-
 # def to_db():
 #     file_path = "./docs/scholarship.pdf"
 #     # file_path = "./docs/FIRST GRADUATE SCHOLARSHIP INFORMATION.pdf"
@@ -18,7 +17,7 @@ from config import vector_db
 
 
 def search(query="FIRST GRADUATE SCHOLARSHIP INFORMATION ?"):
-    docs = vector_db.similarity_search(query=query, k=10)
+    docs = vector_db.similarity_search(query=query, k=5)
 
     # print([doc.page_content for doc in docs])
     return [doc.page_content for doc in docs]

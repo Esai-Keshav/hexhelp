@@ -4,13 +4,13 @@ from langchain_community.document_loaders import PyPDFLoader
 
 
 def to_db():
-    file_path = "./docs/scholarship.pdf"
+    file_path = "./docs/final_docs.pdf"
     # file_path = "./docs/FIRST GRADUATE SCHOLARSHIP INFORMATION.pdf"
     # print(file_path)
     loader = PyPDFLoader(file_path)
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=800,
-        chunk_overlap=100,
+        chunk_size=1000,
+        chunk_overlap=150,
     )
 
     # print(len(loader.load_and_split()))

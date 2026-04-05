@@ -1,5 +1,8 @@
 import faiss
+
+# from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.embeddings import Model2vecEmbeddings
+
 from langchain_community.docstore.in_memory import InMemoryDocstore
 from langchain_community.vectorstores import FAISS
 
@@ -10,6 +13,7 @@ load_dotenv()
 
 
 embeddings = Model2vecEmbeddings("minishlab/potion-base-8M")
+# embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
 embedding_dim = len(embeddings.embed_query("hello world"))
 index = faiss.IndexFlatL2(embedding_dim)

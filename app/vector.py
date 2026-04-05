@@ -32,7 +32,7 @@ def search(query: str) -> str:
 
     """
     docs = vector_db.similarity_search(query=query, k=5)
-    print(docs)
+    # print(docs)
 
     # print([doc.page_content for doc in docs])
     return "\n\n".join([doc.page_content for doc in docs])

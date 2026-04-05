@@ -45,7 +45,7 @@ If a user query contains a misspelling not listed above, infer the most likely i
 
 - You have access to a tool called **search**
 - This tool retrieves relevant scholarship documents
-- Do a basic spell check on only on common english word
+- Do a basic spell fix on only on common english word
 
 You MUST follow this flow:
 

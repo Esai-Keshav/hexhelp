@@ -11,6 +11,7 @@ state = {"messages": []}
 
 async def geneate_response(query):
     state["messages"].append({"role": "user", "content": query})
+    state["messages"] = state["messages"][-6:]
 
     ai_msg = ""
     rag = create_agent(model=model, tools=[search], system_prompt=ai_prompt)
@@ -24,7 +25,7 @@ async def geneate_response(query):
                 content = messages[-1].content
                 if content:
                     ai_msg += content
-                    state["messages"].append({"role": "assistant", "content": ai_msg})
+                    # state["messages"].append({"role": "assistant", "content": ai_msg})
                     yield content
 
 

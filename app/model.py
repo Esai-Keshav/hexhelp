@@ -1,41 +1,31 @@
-from cachetools import TTLCache
 from config import model
-from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from rich import print
 from system_prompt import prompt as ai_prompt
 from vector import search
-
-chat_memory = TTLCache(maxsize=7, ttl=300)
-# chat_memory = []
+from langchain.agents import create_agent
 
 
-def add_history(chat):
-    chat_memory[chat_memory.currsize + 1] = chat
+state = {"messages": []}
 
 
 async def geneate_response(query):
-    docs = search(query=query)
-    print(docs)
-    # add_history(query)
-    print(chat_memory)
+    state["messages"].append({"role": "user", "content": query})
 
-    prompt = ChatPromptTemplate.from_messages(
-        [
-            (
-                "system",
-                ai_prompt,
-            ),
-            ("human", "{question}"),
-        ]
-    )
+    ai_msg = ""
+    rag = create_agent(model=model, tools=[search], system_prompt=ai_prompt)
 
-    rag = prompt | model
-    async for chunk in rag.astream(
-        {"context": docs, "history": chat_memory, "question": query}
-    ):
-        # print(res.content)
-        if chunk:
-            yield chunk.content
+    async for chunk in rag.astream(state):
+        print(chunk)  # debug
+
+        if "model" in chunk:
+            messages = chunk["model"].get("messages", [])
+            if messages:
+                content = messages[-1].content
+                if content:
+                    ai_msg += content
+                    state["messages"].append({"role": "assistant", "content": ai_msg})
+                    yield content
 
 
 if __name__ == "__main__":

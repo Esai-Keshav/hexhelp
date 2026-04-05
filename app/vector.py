@@ -1,4 +1,5 @@
 from config import vector_db
+from langchain.tools import tool
 
 # def to_db():
 #     file_path = "./docs/scholarship.pdf"
@@ -16,11 +17,25 @@ from config import vector_db
 #     vector_store.save_local("./vector_db/")
 
 
-def search(query="FIRST GRADUATE SCHOLARSHIP INFORMATION ?"):
+@tool
+def search(query: str) -> str:
+    """
+     Use this tool for ANY question related to scholarships.
+
+    This tool retrieves official scholarship information such as:
+    - eligibility criteria
+    - application process
+    - benefits
+    - required documents
+
+    ALWAYS use this tool before answering scholarship queries.
+
+    """
     docs = vector_db.similarity_search(query=query, k=5)
+    print(docs)
 
     # print([doc.page_content for doc in docs])
-    return [doc.page_content for doc in docs]
+    return "\n\n".join([doc.page_content for doc in docs])
 
 
 if __name__ == "__main__":

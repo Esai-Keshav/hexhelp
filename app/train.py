@@ -4,7 +4,7 @@ from langchain_community.document_loaders import PyPDFLoader
 
 
 def to_db():
-    file_path = "./docs/scholarship-2.pdf"
+    file_path = "./docs/scholarship.pdf"
     # file_path = "./docs/FIRST GRADUATE SCHOLARSHIP INFORMATION.pdf"
     # print(file_path)
     loader = PyPDFLoader(file_path)

@@ -35,6 +35,8 @@ vector_db = FAISS.load_local(
 )
 
 model = init_chat_model(
+    # model="gemma-4-26b-a4b-it",
+    # model_provider="google_genai",
     model="llama-3.1-8b-instant",
     model_provider="groq",
     temperature=0.15,

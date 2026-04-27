@@ -23,9 +23,15 @@ async def geneate_response(query):
             messages = chunk["model"].get("messages", [])
             if messages:
                 content = messages[-1].content
-                if content:
+                if isinstance(content, list):
+                    for item in content:
+                        if item.get("type") == "text":
+                            text = item.get("text", "")
+                            ai_msg += text
+                            yield text
+
+                elif isinstance(content, str):
                     ai_msg += content
-                    # state["messages"].append({"role": "assistant", "content": ai_msg})
                     yield content
 
 

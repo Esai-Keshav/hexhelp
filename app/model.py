@@ -8,16 +8,21 @@ from langchain.agents import create_agent
 
 state = {"messages": []}
 
+rag = create_agent(
+    model=model,
+    tools=[search],
+    system_prompt=ai_prompt,
+)
+
 
 async def geneate_response(query):
     state["messages"].append({"role": "user", "content": query})
-    state["messages"] = state["messages"][-6:]
+    state["messages"] = state["messages"][-5:]
 
     ai_msg = ""
-    rag = create_agent(model=model, tools=[search], system_prompt=ai_prompt)
 
     async for chunk in rag.astream(state):
-        print(chunk)  # debug
+        print(chunk)
 
         if "model" in chunk:
             messages = chunk["model"].get("messages", [])

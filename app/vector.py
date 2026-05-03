@@ -31,7 +31,7 @@ def search(query: str) -> str:
     ALWAYS use this tool before answering scholarship queries.
 
     """
-    docs = vector_db.similarity_search(query=query, k=5)
+    docs = vector_db.similarity_search(query=query, k=3)
     # print(docs)
 
     # print([doc.page_content for doc in docs])
